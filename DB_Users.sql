@@ -1,0 +1,23 @@
+USE [master]
+GO
+CREATE DATABASE [DB_Users]
+GO
+USE [DB_Users]
+GO
+CREATE TABLE [dbo].[Roles]([Name] nvarchar(20) NOT NULL CONSTRAINT [PK_Roles] PRIMARY KEY)
+GO
+CREATE TABLE [dbo].[Users](
+ [ID] int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Users] PRIMARY KEY,
+ [Login] nvarchar(20) NOT NULL,
+ [Password] nvarchar(20) NOT NULL,
+ [First_Name] nvarchar(50) NULL,
+ [Role_Name] nvarchar(20) NOT NULL)
+GO
+INSERT [dbo].[Roles] ([Name]) VALUES (N'Admin'),(N'Director'),(N'Guest'),(N'Seller')
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON
+INSERT [dbo].[Users] ([ID],[Login],[Password],[First_Name],[Role_Name]) VALUES (4,N'funny',N'somepass',N'Dave',N'Admin'),(6,N'bummer',N'02061995',N'Fred',N'Seller'),(8,N'dolorous',N'polk159',N'Brian',N'Seller'),(19,N'Boss',N'123456',N'Jorge',N'Director')
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+ALTER TABLE [dbo].[Users] WITH CHECK ADD CONSTRAINT [FK_Users_Roles] FOREIGN KEY([Role_Name]) REFERENCES [dbo].[Roles]([Name])
+GO
